@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { FC, useReducer } from "react"
-import { ILoginUser, useAuth } from "../providers/AuthProvider";
+import { ILoginUser, useAuth } from "@providers/auth-provider";
 
 const initialProfile: ILoginUser = {
     login: "",

@@ -1,17 +1,13 @@
-
-import './App.css'
-import { CheckAuth } from './components/CheckAuth';
-import { LoginForm } from './components/LoginForm';
-import { AuthProvider } from './providers/AuthProvider';
+import { AuthProvider } from "@providers/auth-provider";
+import { AppRoutes } from "@services/router";
+import { BrowserRouter } from "react-router-dom";
 
 export function App() {
   return (
-    <div>
+    <BrowserRouter>
       <AuthProvider>
-        <h1>Your App</h1>
-        <LoginForm />
-        <CheckAuth />
+        <AppRoutes />
       </AuthProvider>
-    </div>
-  )
+    </BrowserRouter>
+  );
 }

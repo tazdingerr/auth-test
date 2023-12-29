@@ -1,0 +1,12 @@
+{
+  "name": "Auth Test",
+  "short_name": "Auth Test",
+  "icons": [],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "start_url": "/",
+  "display": "standalone",
+  "description": "Auth Test is Nice",
+  "lang": "eng",
+  "orientation": "portrait"
+}

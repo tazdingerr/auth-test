@@ -1,12 +1,12 @@
+import { LayoutApp } from "@layouts/layout-app";
 import { AuthProvider } from "@providers/auth-provider";
-import { AppRoutes } from "@services/router";
 import { BrowserRouter } from "react-router-dom";
 
 export function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppRoutes />
+        <LayoutApp />
       </AuthProvider>
     </BrowserRouter>
   );

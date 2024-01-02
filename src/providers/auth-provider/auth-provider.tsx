@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { AuthContextProps, AuthProviderProps, ILoginUser, IRegistrationUser, IProfile } from ".";
+import { AuthContextProps, AuthProviderProps, ISignInProfile, ISignUpProfile, IProfile } from ".";
 import { axiosInstance } from "@services/axiosInstance";
 
 const AuthContext = createContext<AuthContextProps | null>(null);
@@ -22,7 +22,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
   const [_profile, setProfile] = useState<IProfile | null>(null);
   const profile = useMemo(() => _profile, [_profile]);
 
-  const loginUser = useCallback(async (params: ILoginUser) => {
+  const signInProfile = useCallback(async (params: ISignInProfile) => {
     return axiosInstance
       .post("/sign-in", { ...params })
       .then(() => {
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
       });
   }, []);
 
-  const registrationUser = useCallback(async (params: IRegistrationUser) => {
+  const signUpProfile = useCallback(async (params: ISignUpProfile) => {
     return axiosInstance
       .post("/sign-up", {
         ...params,
@@ -41,6 +41,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
       .then(() => {
         return getProfile();
       })
+      .catch((error) => {
+        throw error;
+      });
+  }, []);
+
+  const googleProfile = useCallback(async () => {
+    return axiosInstance
+      .get("/api/auth/google")
+      .then(() => {})
+      .catch((error) => {
+        throw error;
+      });
+  }, []);
+
+  const logoutProfile = useCallback(async () => {
+    return axiosInstance
+      .get("/logout")
+      .then(() => {})
       .catch((error) => {
         throw error;
       });
@@ -58,7 +76,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ profile, loginUser, registrationUser, setProfile, getProfile }}>
+    <AuthContext.Provider value={{ profile, signInProfile, signUpProfile, logoutProfile, googleProfile, setProfile, getProfile }}>
       {props.children}
     </AuthContext.Provider>
   );

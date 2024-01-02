@@ -11,17 +11,17 @@ export interface IProfile {
     updated_at: Date
 }
 
-export interface ILoginUser {
+export interface ISignInProfile {
     login: string,
     password: string,
 }
 
-export interface ILoginUserResponse {
+export interface ISignInProfileResponse {
     status: number,
     message: string
 }
 
-export interface IRegistrationUser {
+export interface ISignUpProfile {
     email: string,
     first_name: string,
     last_name?: string,
@@ -29,7 +29,7 @@ export interface IRegistrationUser {
     password: string,
 }
 
-export const initialUser: IProfile = {
+export const initialProfile: IProfile = {
     id: "",
     email: "",
     first_name: "",
@@ -47,11 +47,11 @@ export interface AuthProviderProps {
 }
 
 export interface AuthContextProps {
-    // currentTab: T
-    // onTabChange: (e: React.SyntheticEvent, tabValue: T) => void
+    signInProfile: (params: ISignInProfile) => Promise<void>
+    signUpProfile: (params: ISignUpProfile) => Promise<void>
+    logoutProfile: () => Promise<void>
+    googleProfile: () => Promise<void>
+    getProfile: () => Promise<void>
     profile: IProfile | null
     setProfile: React.Dispatch<React.SetStateAction<IProfile | null>>
-    loginUser: (params: ILoginUser) => Promise<void>
-    registrationUser: (params: IRegistrationUser) => Promise<void>
-    getProfile: () => Promise<void>
 }

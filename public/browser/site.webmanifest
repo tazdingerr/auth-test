@@ -1,9 +1,9 @@
 {
+  "id": "auth-test",
   "name": "Auth Test",
   "short_name": "Auth Test",
-  "icons": [],
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "theme_color": "#4195d2",
+  "background_color": "#f2f2f6",
   "start_url": "/",
   "display": "standalone",
   "description": "Auth Test is Nice",

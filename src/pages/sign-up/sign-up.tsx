@@ -1,16 +1,17 @@
 /* eslint-disable react-refresh/only-export-components */
 import { FC, useReducer } from "react"
-import { ILoginUser, useAuth } from "@providers/auth-provider";
+import { ISignUpProfile, useAuth } from "@providers/auth-provider";
 
-const initialProfile: ILoginUser = {
+const initialProfile: ISignUpProfile = {
     login: "",
     password: "",
+    email: "",
+    first_name: ""
 }
-export const LoginForm: FC = () => {
-    const { loginUser } = useAuth();
-
+export const SignUp: FC = () => {
+    const { signUpProfile } = useAuth();
     const [profile, setProfile] = useReducer(
-        (profile: ILoginUser, newDetails: Partial<ILoginUser>) => ({ ...profile, ...newDetails }),
+        (profile: ISignUpProfile, newDetails: Partial<ISignUpProfile>) => ({ ...profile, ...newDetails }),
         initialProfile
     )
 
@@ -19,7 +20,7 @@ export const LoginForm: FC = () => {
     }
     const submit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        loginUser(profile);
+        signUpProfile(profile);
         clearForm();
     };
     return (
@@ -36,6 +37,20 @@ export const LoginForm: FC = () => {
                 value={profile.password}
                 type="password"
                 placeholder="Password"
+                required
+            />
+            <input
+                onChange={e => setProfile({ email: e.target.value })}
+                value={profile.email}
+                type="email"
+                placeholder="email"
+                required
+            />
+            <input
+                onChange={e => setProfile({ first_name: e.target.value })}
+                value={profile.first_name}
+                type="text"
+                placeholder="first_name"
                 required
             />
             <button> Sign-up </button>

@@ -1,8 +1,18 @@
-import { FC } from "react";
-import { LayoutAppProps } from ".";
+import { useAuth } from "@providers/auth-provider";
+import { AppRoutes } from "@services/router";
+import { AppRoutesAuthorization } from "@services/router/router-authorization";
+import { FC, useLayoutEffect } from "react";
 
-export const LayoutApp: FC<LayoutAppProps> = (props: LayoutAppProps) => {
-  const isLoading = false;
+export const LayoutApp: FC = () => {
+  const { profile, getProfile } = useAuth();
 
-  return isLoading ? <>Loading...</> : <>{props.children}</>;
+  useLayoutEffect(() => {
+    getProfile();
+  }, []);
+
+  return profile ? (
+    <AppRoutes/>
+  ) : (
+    <AppRoutesAuthorization/>
+  );
 };

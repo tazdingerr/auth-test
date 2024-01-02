@@ -3,7 +3,7 @@ import axios from "axios";
 export const accessTokenName = "Token";
 
 export const axiosInstance = axios.create({
-    baseURL: "https://localhost:3000/api",
+    baseURL: "https://waifu.jenesei.ru/api",
     withCredentials: true,
 });
 

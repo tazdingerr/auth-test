@@ -22,62 +22,64 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
   const [_profile, setProfile] = useState<IProfile | null>(null);
   const profile = useMemo(() => _profile, [_profile]);
-  const googleProfile = axiosInstance.defaults.baseURL + "/auth/google";
   const { toggleLoading } = useLoading();
+  const googleProfile = axiosInstance.defaults.baseURL + "/auth/google";
 
   const signInProfile = useCallback(async (params: ISignInProfile) => {
-    toggleLoading();
+    toggleLoading({ checked: true });
     return axiosInstance
       .post("/sign-in", { ...params })
       .then(() => {
-        toggleLoading();
-        return getProfile();
+        toggleLoading({ checked: false });
+        getProfile();
       })
       .catch((error) => {
-        toggleLoading();
+        toggleLoading({ checked: false });
         throw error;
       });
   }, []);
 
   const signUpProfile = useCallback(async (params: ISignUpProfile) => {
-    toggleLoading();
+    toggleLoading({ checked: true });
     return axiosInstance
       .post("/sign-up", {
         ...params,
       })
       .then(() => {
-        toggleLoading();
-        return getProfile();
+        toggleLoading({ checked: false });
+        getProfile();
       })
       .catch((error) => {
-        toggleLoading();
+        toggleLoading({ checked: false });
         throw error;
       });
   }, []);
 
   const logoutProfile = useCallback(async () => {
-    toggleLoading();
+    toggleLoading({ checked: true });
     return axiosInstance
       .get("/logout")
       .then(() => {
-        toggleLoading();
-        return getProfile();
+        toggleLoading({ checked: false });
+        setProfile(null);
       })
       .catch((error) => {
-        toggleLoading();
+        toggleLoading({ checked: false });
         throw error;
       });
   }, []);
 
   const getProfile = useCallback(async (): Promise<void> => {
+    toggleLoading({ checked: true });
     return axiosInstance
       .get("/profile")
       .then(({ data }: { data: IProfile }) => {
-        toggleLoading();
-        return setProfile(data);
+        toggleLoading({ checked: false });
+        setProfile(data);
       })
       .catch((error) => {
-        toggleLoading();
+        toggleLoading({ checked: false });
+        setProfile(null);
         throw error;
       });
   }, []);

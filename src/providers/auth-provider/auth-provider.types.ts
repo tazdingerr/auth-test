@@ -50,7 +50,7 @@ export interface AuthContextProps {
     signInProfile: (params: ISignInProfile) => Promise<void>
     signUpProfile: (params: ISignUpProfile) => Promise<void>
     logoutProfile: () => Promise<void>
-    googleProfile: () => Promise<void>
+    googleProfile: string
     getProfile: () => Promise<void>
     profile: IProfile | null
     setProfile: React.Dispatch<React.SetStateAction<IProfile | null>>

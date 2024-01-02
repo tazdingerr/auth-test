@@ -20,6 +20,7 @@
     "react-awesome-button": "^7.0.5",
     "react-dom": "^18.2.0",
     "react-google-button": "^0.7.2",
+    "react-loading": "^2.0.3",
     "react-router-dom": "^6.21.1",
     "styled-components": "^6.1.6",
     "telegram-login-button": "^0.1.0"

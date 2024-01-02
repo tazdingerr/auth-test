@@ -5,6 +5,7 @@ export const LayoutAuthorizationWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
+  padding: 20px;
 `;
 
 export const LayoutAuthorizationButtonContainer = styled.div`

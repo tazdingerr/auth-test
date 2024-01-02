@@ -1,6 +1,7 @@
+import { useTelegramAuth } from "@hooks/use-telegram-login";
 import { IProfile, useAuth } from "@providers/auth-provider";
+import { useEffect } from "react";
 import { AwesomeButton } from "react-awesome-button";
-import TelegramLoginButton, { TelegramUser } from "telegram-login-button";
 
 const renderValue = (value: string | boolean | Date, key: keyof IProfile) => {
   if (key == "avatar_url") {
@@ -13,12 +14,17 @@ const renderValue = (value: string | boolean | Date, key: keyof IProfile) => {
 };
 
 export const Profile = () => {
+  const { telegramUser, Button } = useTelegramAuth();
+
   const { profile, logoutProfile } = useAuth();
 
-  if (profile) {
-    return (
+  useEffect(() => {
+    console.log("telegramUser", telegramUser);
+  }, []);
+  return (
+    profile && (
       <div>
-        <TelegramLoginButton botName="test" dataOnauth={(profile: TelegramUser) => console.log(profile)} />
+        {Button}
         {Object.keys(profile).map((key) => (
           <div key={key}>
             {key}: {renderValue(profile[key as keyof IProfile], key as keyof IProfile)}
@@ -28,8 +34,6 @@ export const Profile = () => {
           Logout
         </AwesomeButton>
       </div>
-    );
-  } else {
-    return <div>Пользователь не авторизован</div>;
-  }
+    )
+  );
 };

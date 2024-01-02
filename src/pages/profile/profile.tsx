@@ -1,6 +1,5 @@
 import { useTelegramAuth } from "@hooks/use-telegram-login";
 import { IProfile, useAuth } from "@providers/auth-provider";
-import { useEffect } from "react";
 import { AwesomeButton } from "react-awesome-button";
 
 const renderValue = (value: string | boolean | Date, key: keyof IProfile) => {
@@ -14,17 +13,13 @@ const renderValue = (value: string | boolean | Date, key: keyof IProfile) => {
 };
 
 export const Profile = () => {
-  const { telegramUser, Button } = useTelegramAuth();
-
+  const { TelegramButton } = useTelegramAuth({ botName: "test_petproj1_bot" });
   const { profile, logoutProfile } = useAuth();
 
-  useEffect(() => {
-    console.log("telegramUser", telegramUser);
-  }, []);
   return (
     profile && (
       <div>
-        {Button}
+        {!profile.telegram_verified && TelegramButton}
         {Object.keys(profile).map((key) => (
           <div key={key}>
             {key}: {renderValue(profile[key as keyof IProfile], key as keyof IProfile)}

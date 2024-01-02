@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useAuth } from "@providers/auth-provider";
 import TelegramLoginButton, { TelegramUser } from "telegram-login-button";
 
-export const useTelegramAuth = () => {
-  const [telegramUser, setTelegramUser] = useState<TelegramUser | null>(null);
+interface UseTelegramAuthProps {
+  botName: string;
+}
+export const useTelegramAuth = (props: UseTelegramAuthProps) => {
+  const { authTelegramProfile } = useAuth();
 
-  const Button = <TelegramLoginButton botName="test_petproj1_bot" dataOnauth={(user: TelegramUser) => setTelegramUser(user)} />;
+  const TelegramButton = (
+    <TelegramLoginButton
+      botName={props.botName}
+      dataOnauth={(user: TelegramUser) => authTelegramProfile({ chatId: String(user.id) })}
+    />
+  );
 
   return {
-    telegramUser,
-    Button,
+    TelegramButton,
   };
 };
 

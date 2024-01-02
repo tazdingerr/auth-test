@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { AuthContextProps, AuthProviderProps, ISignInProfile, ISignUpProfile, IProfile } from ".";
+import { AuthContextProps, AuthProviderProps, ISignInProfile, ISignUpProfile, IProfile, IAuthTelegramProfile } from ".";
 import { axiosInstance } from "@services/axiosInstance";
 import { useLoading } from "@providers/loading-provider";
 
@@ -69,6 +69,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
       });
   }, []);
 
+  const authTelegramProfile = useCallback(async (params: IAuthTelegramProfile) => {
+    return axiosInstance
+      .get(`/auth/telegram`, {
+        params: {
+          chatId: params.chatId,
+        },
+      })
+      .then(() => {
+        getProfile();
+      })
+      .catch((error) => {
+        throw error;
+      });
+  }, []);
+
   const getProfile = useCallback(async (): Promise<void> => {
     toggleLoading({ checked: true });
     return axiosInstance
@@ -86,7 +101,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
 
   return (
     <AuthContext.Provider
-      value={{ profile, signInProfile, signUpProfile, logoutProfile, googleProfile, setProfile, getProfile }}
+      value={{ profile, authTelegramProfile, signInProfile, signUpProfile, logoutProfile, googleProfile, setProfile, getProfile }}
     >
       {props.children}
     </AuthContext.Provider>

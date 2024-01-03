@@ -8,7 +8,7 @@ export const LayoutAuthorization: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { googleProfile } = useAuth();
-
+  
   return (
     <LayoutAuthorizationWrapper>
       <Outlet />
@@ -24,7 +24,7 @@ export const LayoutAuthorization: FC = () => {
           </AwesomeButton>
         )}
         <Link to={googleProfile}>
-          <AwesomeButton type="primary" onPress={() => {}}>
+          <AwesomeButton type="primary">
             {location.pathname !== "/sign-up" ? "Sign in with Google" : "Sign up with Google"}
           </AwesomeButton>
         </Link>

@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import { AuthContextProps, AuthProviderProps, ISignInProfile, ISignUpProfile, IProfile, IAuthTelegramProfile } from ".";
-import { axiosInstance } from "@services/axiosInstance";
 import { useLoading } from "@providers/loading-provider";
+import { useAxios } from "@providers/axios-provider";
 
 const AuthContext = createContext<AuthContextProps | null>(null);
 
@@ -23,6 +23,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
   const [_profile, setProfile] = useState<IProfile | null>(null);
   const profile = useMemo(() => _profile, [_profile]);
   const { toggleLoading } = useLoading();
+  const { axiosInstance } = useAxios();
+
   const googleProfile = axiosInstance.defaults.baseURL + "/auth/google";
 
   const signInProfile = useCallback(async (params: ISignInProfile) => {
@@ -101,7 +103,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
 
   return (
     <AuthContext.Provider
-      value={{ profile, authTelegramProfile, signInProfile, signUpProfile, logoutProfile, googleProfile, setProfile, getProfile }}
+      value={{
+        profile,
+        authTelegramProfile,
+        signInProfile,
+        signUpProfile,
+        logoutProfile,
+        googleProfile,
+        setProfile,
+        getProfile,
+      }}
     >
       {props.children}
     </AuthContext.Provider>

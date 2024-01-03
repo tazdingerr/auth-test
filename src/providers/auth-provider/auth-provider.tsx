@@ -62,8 +62,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
     return axiosInstance
       .get("/logout")
       .then(() => {
-        document.cookie = "name=<Refresh>; expires=-1";
-        document.cookie = "name=<Session>; expires=-1";
+        document.cookie = "name=<refresh_token>; expires=-1";
+        document.cookie = "name=<access_token>; expires=-1";
         setProfile(null);
         toggleLoading({ checked: false });
       })

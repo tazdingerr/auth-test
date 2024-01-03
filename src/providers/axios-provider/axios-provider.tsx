@@ -10,7 +10,7 @@ const AxiosContext = createContext<AxiosContextProps | null>(null);
 export const useAxios = () => {
   const context = useContext(AxiosContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAxios must be used within an AxiosProvider");
   }
   return context;
 };

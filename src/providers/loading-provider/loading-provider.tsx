@@ -10,7 +10,7 @@ const LoadingContext = createContext<LoadingContextProps | null>(null);
 export const useLoading = () => {
   const context = useContext(LoadingContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useLoading must be used within an LoadingProvider");
   }
   return context;
 };

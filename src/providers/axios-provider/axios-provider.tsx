@@ -23,6 +23,7 @@ export const AxiosProvider: React.FC<AxiosProviderProps> = (props) => {
     baseURL: "https://waifu.jenesei.ru/api",
     withCredentials: true,
   });
+  
   const axiosRefresh = async () => {
     return await axiosInstance
       .get("/refresh")

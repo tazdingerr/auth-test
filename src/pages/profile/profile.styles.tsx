@@ -11,6 +11,7 @@ export const StyledCard = styled(Card)`
   min-width: 30%;
   max-width: 95%;
   @media screen and (orientation: portrait) {
-    width: 90%;
+    width: 100%;
+    max-width: 100%;
   }
 `;

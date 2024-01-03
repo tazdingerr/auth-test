@@ -5,6 +5,7 @@ import { LayoutApp } from "@layouts/layout-app";
 import { BrowserRouter } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { ProfileProvider } from "@providers/profile-provider";
 
 export function App() {
   return (
@@ -12,9 +13,11 @@ export function App() {
       <BrowserRouter>
         <AxiosProvider>
           <LoadingProvider>
-            <AuthProvider>
-              <LayoutApp />
-            </AuthProvider>
+            <ProfileProvider>
+              <AuthProvider>
+                <LayoutApp />
+              </AuthProvider>
+            </ProfileProvider>
           </LoadingProvider>
         </AxiosProvider>
       </BrowserRouter>

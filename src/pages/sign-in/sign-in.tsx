@@ -1,9 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import { FC, useReducer } from "react";
-import { ISignInProfile, useAuth } from "@providers/auth-provider";
+import { useAuth } from "@providers/auth-provider";
 import { AwesomeButton } from "react-awesome-button";
 import TextField from "@mui/material/TextField";
 import { SignInFormContainer } from ".";
+import { ISignInProfile } from "@providers/profile-provider";
 
 const initialProfile: ISignInProfile = {
   login: "",

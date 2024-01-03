@@ -1,13 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { InnerContainer, MainContainer } from ".";
+import { LayoutProfileWrapper } from ".";
 
 export const LayoutProfile: React.FC = () => {
   return (
-    <MainContainer>
-      <InnerContainer>
-        <Outlet />
-      </InnerContainer>
-    </MainContainer>
+    <LayoutProfileWrapper>
+      <Outlet />
+    </LayoutProfileWrapper>
   );
 };

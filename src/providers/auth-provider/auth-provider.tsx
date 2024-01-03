@@ -1,7 +1,14 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { AuthContextProps, AuthProviderProps, ISignInProfile, ISignUpProfile, IProfile, IAuthTelegramProfile } from ".";
+import { createContext, useCallback, useContext } from "react";
+import { AuthContextProps, AuthProviderProps } from ".";
 import { useLoading } from "@providers/loading-provider";
 import { useAxios } from "@providers/axios-provider";
+import {
+  IAuthTelegramProfile,
+  ISignInProfile,
+  ISignUpProfile,
+  initialProfile,
+  useProfile,
+} from "@providers/profile-provider";
 
 const AuthContext = createContext<AuthContextProps | null>(null);
 
@@ -20,13 +27,18 @@ export const useAuth = () => {
  * Провайдер авторизации
  */
 export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
-  const [_profile, setProfile] = useState<IProfile | null>(null);
-  const profile = useMemo(() => _profile, [_profile]);
   const { toggleLoading } = useLoading();
   const { axiosInstance } = useAxios();
+  const { setProfile, getProfile } = useProfile();
 
+  /**
+   * Авторизация через Google
+   */
   const googleProfile = axiosInstance.defaults.baseURL + "/auth/google";
 
+  /**
+   * Авторизация
+   */
   const signInProfile = useCallback(async (params: ISignInProfile) => {
     toggleLoading({ checked: true });
     return axiosInstance
@@ -41,6 +53,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
       });
   }, []);
 
+  /**
+   * Регистрация
+   */
   const signUpProfile = useCallback(async (params: ISignUpProfile) => {
     toggleLoading({ checked: true });
     return axiosInstance
@@ -57,6 +72,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
       });
   }, []);
 
+  /**
+   * Выход
+   */
   const logoutProfile = useCallback(async () => {
     toggleLoading({ checked: true });
     return axiosInstance
@@ -64,7 +82,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
       .then(() => {
         document.cookie = "name=<refresh_token>; expires=-1";
         document.cookie = "name=<access_token>; expires=-1";
-        setProfile(null);
+        setProfile(initialProfile);
         toggleLoading({ checked: false });
       })
       .catch((error) => {
@@ -73,6 +91,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
       });
   }, []);
 
+  /**
+   * Привязать Telegram
+   */
   const authTelegramProfile = useCallback(async (params: IAuthTelegramProfile) => {
     return axiosInstance
       .get(`/auth/telegram`, {
@@ -81,39 +102,51 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props) => {
         },
       })
       .then(() => {
-        getProfile();
+        setProfile({ telegram_verified: true });
       })
       .catch((error) => {
         throw error;
       });
   }, []);
 
-  const getProfile = useCallback(async (): Promise<void> => {
-    toggleLoading({ checked: true });
+  /**
+   * Отвязать Telegram
+   */
+  const unAuthTelegramProfile = useCallback(async () => {
     return axiosInstance
-      .get("/profile")
-      .then(({ data }: { data: IProfile }) => {
-        toggleLoading({ checked: false });
-        setProfile(data);
+      .put(`/auth/telegram`)
+      .then(() => {
+        setProfile({ telegram_verified: false });
       })
       .catch((error) => {
-        toggleLoading({ checked: false });
-        setProfile(null);
         throw error;
+      });
+  }, []);
+
+  /**
+   * Обновить токен доступа
+   */
+  const refreshProfile = useCallback(async () => {
+    return await axiosInstance
+      .get("/refresh")
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        return false;
       });
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        profile,
         authTelegramProfile,
+        unAuthTelegramProfile,
         signInProfile,
         signUpProfile,
         logoutProfile,
         googleProfile,
-        setProfile,
-        getProfile,
+        refreshProfile,
       }}
     >
       {props.children}

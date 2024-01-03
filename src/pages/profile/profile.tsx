@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { AwesomeButton } from "react-awesome-button";
-import { CardActions, CardMedia, TextField } from "@mui/material";
+import { CardMedia, TextField } from "@mui/material";
 import { DateField } from "@mui/x-date-pickers";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { useAuth } from "@providers/auth-provider";
@@ -41,11 +41,6 @@ export const Profile = () => {
           variant="outlined"
           disabled
         />
-      </StyledCardContent>
-      <CardActions>
-        <AwesomeButton onPress={() => logoutProfile()} type="primary">
-          Logout
-        </AwesomeButton>
         {!profile?.telegram_verified ? (
           TelegramButton
         ) : (
@@ -53,7 +48,10 @@ export const Profile = () => {
             Unlink Telegram
           </AwesomeButton>
         )}
-      </CardActions>
+        <AwesomeButton onPress={() => logoutProfile()} type="primary">
+          Logout
+        </AwesomeButton>
+      </StyledCardContent>
     </StyledCard>
   );
 };

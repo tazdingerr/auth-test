@@ -9,6 +9,9 @@ export const StyledTelegramLoginButton = styled(TelegramLoginButton)`
 `;
 
 export const StyledAwesomeButton = styled(AwesomeButton)`
+  height: 100%;
+  display: flex;
+  align-items: center;
   --button-primary-color: #54a9eb;
   --button-primary-color-hover: #54a9eb;
   --button-primary-color-active: #54a9eb;

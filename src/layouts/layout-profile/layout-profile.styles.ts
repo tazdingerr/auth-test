@@ -6,4 +6,7 @@ export const LayoutProfileWrapper = styled.div`
   align-items: flex-start;
   gap: 20px;
   justify-content: flex-start;
+  @media screen and (orientation: portrait) {
+    align-items: center;
+  }
 `;

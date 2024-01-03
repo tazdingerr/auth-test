@@ -23,7 +23,9 @@ export const AxiosProvider: React.FC<AxiosProviderProps> = (props) => {
     baseURL: "https://waifu.jenesei.ru/api",
     withCredentials: true,
   });
-  
+
+  const currentDomain = window.location.host;
+
   const axiosRefresh = async () => {
     return await axiosInstance
       .get("/refresh")
@@ -34,5 +36,5 @@ export const AxiosProvider: React.FC<AxiosProviderProps> = (props) => {
         return false;
       });
   };
-  return <AxiosContext.Provider value={{ axiosInstance, axiosRefresh }}>{props.children}</AxiosContext.Provider>;
+  return <AxiosContext.Provider value={{ currentDomain, axiosInstance, axiosRefresh }}>{props.children}</AxiosContext.Provider>;
 };

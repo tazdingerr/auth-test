@@ -32,7 +32,7 @@ export const LayoutAuthorization: FC = () => {
         <a onClick={(event) => handleExternalLinkClick(event, googleProfile)}>
           <AwesomeButton type="primary">
             {location.pathname !== "/sign-up" ? "Sign in with Google" : "Sign up with Google"}
-          </AwesomeButton>{" "}
+          </AwesomeButton>
         </a>
       </LayoutAuthorizationButtonContainer>
     </LayoutAuthorizationWrapper>

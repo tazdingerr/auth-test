@@ -7,4 +7,5 @@ export interface AxiosProviderProps {
 export interface AxiosContextProps {
   axiosRefresh: () => Promise<boolean>;
   axiosInstance: AxiosInstance;
+  currentDomain: string
 }
